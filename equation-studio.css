@@ -77,6 +77,7 @@
 }
 [data-equation-view="plot"] .portrait-field { opacity: 1; pointer-events: auto; }
 .equation-interest-layer {
+  position: relative;
   display: grid;
   align-content: center;
   min-width: 0;
@@ -86,6 +87,20 @@
 }
 [data-equation-view="plot"] .equation-interest-layer { opacity: 0; }
 .interests-fourier { display: block; width: 100%; }
+.fourier-row-targets { position: absolute; pointer-events: none; }
+.fourier-row-target {
+  position: absolute;
+  right: 0;
+  left: 0;
+  padding: 0;
+  border: 0;
+  border-radius: .24rem;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.fourier-row-target:focus-visible { outline-offset: -2px; }
+[data-equation-view="plot"] .fourier-row-targets { visibility: hidden; }
 .interests-fourier[hidden], .equation-reset[hidden] { display: none; }
 .equation-interest-layer ol {
   display: grid;
@@ -249,6 +264,6 @@
   .equation-interest-layer { position: static; padding: 0; opacity: 1 !important; }
   .equation-interest-layer ol { color: var(--ink); }
   .has-fourier-words [data-fourier-fallback] { position: static; width: auto; height: auto; overflow: visible; clip-path: none; white-space: normal; }
-  .interests-fourier, .portrait-field, .equation-scene, .equation-reset, .equation-controls { display: none; }
+  .interests-fourier, .fourier-row-targets, .portrait-field, .equation-scene, .equation-reset, .equation-controls { display: none; }
   .portrait-stage { background: none; }
 }

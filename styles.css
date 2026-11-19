@@ -354,7 +354,7 @@ img { max-width: 100%; }
 .figure-link:hover .figure-action { text-decoration: underline; }
 .figure-link img { display: block; width: 100%; height: auto; }
 .work-figure figcaption { margin-top: .57rem; color: var(--quiet); font-size: .875rem; line-height: 1.46; }
-.writing-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(.95rem, 3vw, 2.4rem); }
+.writing-grid { display: grid; gap: clamp(1.15rem, 3vw, 2.4rem); }
 .writing-card {
   display: flex;
   flex-direction: column;
@@ -364,8 +364,6 @@ img { max-width: 100%; }
   border-radius: .42rem;
   background: var(--surface);
 }
-.writing-card .work-figure { margin-top: auto; }
-.writing-card .figure-link img { aspect-ratio: 1.54; object-fit: contain; }
 .writing-copy h3 { margin-bottom: .52rem; font-size: clamp(2.2rem, 3.2vw, 3.15rem); line-height: .99; }
 .writing-copy p { color: var(--quiet); }
 
@@ -423,9 +421,13 @@ img { max-width: 100%; }
   box-shadow: 0 16px 90px #05110e60;
 }
 .figure-dialog::backdrop { background: #080a12d4; backdrop-filter: blur(5px); }
-.figure-dialog-header { display: flex; justify-content: space-between; align-items: flex-start; gap: .7rem; margin-bottom: .8rem; }
+.figure-dialog-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: .7rem; margin-bottom: .8rem; }
 .figure-dialog h2 { font-size: clamp(1.55rem, 3vw, 2.4rem); line-height: 1; }
 .figure-dialog button { border: 1px solid var(--line); border-radius: .25rem; padding: .35rem .7rem; background: var(--paper); color: var(--ink); font: inherit; cursor: pointer; }
+.figure-dialog-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .42rem; }
+.figure-dialog-viewport { max-height: 72vh; overflow: auto; border-radius: .2rem; background: #fff; overscroll-behavior: contain; }
+.figure-dialog-viewport.is-full-size img { width: auto; max-width: none; }
+.figure-dialog button[aria-pressed="true"] { border-color: var(--accent-line); color: var(--accent); }
 .figure-dialog button:hover { border-color: var(--accent-line); color: var(--accent); }
 .figure-dialog img { display: block; width: 100%; height: auto; border-radius: .2rem; background: #fff; }
 .figure-dialog-caption { margin-top: .55rem; color: var(--quiet); }

@@ -39,6 +39,17 @@ if (typeof figureDialog?.showModal === 'function') {
   const dialogImage = figureDialog.querySelector('img');
   const dialogCaption = figureDialog.querySelector('.figure-dialog-caption');
   const dialogTitle = figureDialog.querySelector('h2');
+  const figureViewport = figureDialog.querySelector('.figure-dialog-viewport');
+  const fullSize = figureDialog.querySelector('[data-figure-full-size]');
+
+  function setFullSize(active) {
+    fullSize.setAttribute('aria-pressed', String(active));
+    figureViewport.classList.toggle('is-full-size', active);
+    figureViewport.scrollTop = 0;
+    figureViewport.scrollLeft = 0;
+  }
+
+  fullSize.addEventListener('click', () => setFullSize(fullSize.getAttribute('aria-pressed') !== 'true'));
 
   for (const link of document.querySelectorAll('.figure-link')) {
     link.setAttribute('aria-haspopup', 'dialog');
@@ -47,13 +58,15 @@ if (typeof figureDialog?.showModal === 'function') {
 
       const preview = link.querySelector('img');
       const figure = link.closest('figure');
-      const title = link.closest('article')?.querySelector('h3');
+      const title = link.dataset.figureTitle ?? link.closest('article')?.querySelector('h3')?.textContent ?? 'Research figure';
 
       event.preventDefault();
       dialogImage.src = link.href;
-      dialogImage.alt = preview.alt;
-      dialogCaption.textContent = figure.querySelector('figcaption')?.textContent ?? '';
-      dialogTitle.textContent = title?.textContent ?? 'Research figure';
+      dialogImage.alt = link.dataset.figureAlt ?? preview?.alt ?? title;
+      dialogCaption.textContent = link.dataset.figureTitle ? '' : figure?.querySelector('figcaption')?.textContent ?? '';
+      dialogCaption.hidden = !dialogCaption.textContent;
+      dialogTitle.textContent = title;
+      setFullSize(false);
       figureDialog.showModal();
       figureDialog.scrollTop = 0;
     });

@@ -6,6 +6,7 @@
   const root = document.documentElement;
   const twoPi = Math.PI * 2;
   const duration = 2680;
+  const rowDuration = 1340;
   const traceDuration = 510;
   const fillDuration = 300;
   const glyphCache = new Map();
@@ -147,6 +148,22 @@
     if (![...new Set(phrases.join(' '))].every(glyph)) return;
 
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const targets = document.createElement('div');
+    targets.className = 'fourier-row-targets';
+    targets.hidden = true;
+    const buttons = phrases.map((phrase, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'fourier-row-target';
+      button.setAttribute('aria-label', `Replay lettering for ${phrase}`);
+      button.addEventListener('pointerenter', event => {
+        if (event.pointerType !== 'touch' && !event.buttons) replayRow(index);
+      });
+      button.addEventListener('click', () => replayRow(index));
+      targets.append(button);
+      return button;
+    });
+    canvas.after(targets);
     let accent = '#d6f983';
     let ink = '#f3f1e7';
     let board = '#0c151c';
@@ -156,6 +173,8 @@
     let density = 1;
     let letters = [];
     let rows = [];
+    let animating = [];
+    let activeRow = null;
     let elapsed = 0;
     let filled = 0;
     let frame = 0;
@@ -204,13 +223,31 @@
         layer.font = `600 ${row.numberSize}px ui-monospace, monospace`;
         layer.fillText(row.number, (row.gutter + 2) / 2, row.numberY);
       }
+      if (activeRow !== null) {
+        layer.fillStyle = ink;
+        for (const [index, row] of rows.entries()) {
+          if (index === activeRow) continue;
+          for (const letter of row.letters) fillLetter(layer, letter);
+        }
+      }
+    }
+
+    function endTime() {
+      return activeRow === null ? duration : rowDuration;
+    }
+
+    function setTimeline() {
+      animating = activeRow === null ? letters : rows[activeRow]?.letters ?? [];
+      const stagger = (endTime() - traceDuration - fillDuration) / Math.max(1, animating.length - 1);
+      animating.forEach((letter, index) => { letter.delay = index * stagger; });
     }
 
     function render(now) {
-      const displayed = playing || !started ? now : duration;
+      const displayed = playing || !started ? now : endTime();
+      const settled = displayed === endTime();
       completedContext.fillStyle = ink;
-      while (filled < letters.length && displayed >= letters[filled].delay + traceDuration + fillDuration) {
-        fillLetter(completedContext, letters[filled]);
+      while (filled < animating.length && (settled || displayed >= animating[filled].delay + traceDuration + fillDuration)) {
+        fillLetter(completedContext, animating[filled]);
         filled++;
       }
 
@@ -219,8 +256,8 @@
       context.lineJoin = 'round';
       context.lineCap = 'round';
 
-      for (let index = filled; index < letters.length; index++) {
-        const letter = letters[index];
+      for (let index = filled; index < animating.length; index++) {
+        const letter = animating[index];
         const age = displayed - letter.delay;
         if (age <= 0) break;
 
@@ -247,7 +284,7 @@
     }
 
     function canPlay() {
-      return enabled && playing && visible && !document.hidden && letters.length > 0;
+      return enabled && playing && visible && !document.hidden && animating.length > 0;
     }
 
     function requestFrame() {
@@ -263,30 +300,56 @@
     function advance(now) {
       frame = 0;
       if (!canPlay()) return;
-      elapsed = Math.min(duration, elapsed + (previousFrame === null ? 1000 / 60 : Math.min(42, now - previousFrame)));
+      const end = endTime();
+      elapsed = Math.min(end, elapsed + (previousFrame === null ? 1000 / 60 : Math.min(42, now - previousFrame)));
       previousFrame = now;
-      playing = elapsed < duration;
+      playing = elapsed < end;
       render(elapsed);
       if (playing) requestFrame();
       else previousFrame = null;
     }
 
-    function play() {
+    function start(row) {
       pause();
       enabled = true;
       started = true;
-      elapsed = motion.matches ? duration : 0;
-      playing = elapsed < duration;
+      activeRow = row;
+      const end = endTime();
+      elapsed = motion.matches ? end : 0;
+      playing = elapsed < end;
+      setTimeline();
       resize();
       clearCompleted();
       if (width) render(elapsed);
       requestFrame();
     }
 
+    function play() { start(null); }
+
+    function replayRow(row) {
+      if (!enabled || !rows[row] || (playing && activeRow === row)) return;
+      start(row);
+    }
+
+    function syncTargets() {
+      if (!width || !height) return;
+      const canvasBounds = canvas.getBoundingClientRect();
+      const panelBounds = panel.getBoundingClientRect();
+      targets.style.left = `${canvasBounds.left - panelBounds.left - panel.clientLeft}px`;
+      targets.style.top = `${canvasBounds.top - panelBounds.top - panel.clientTop}px`;
+      targets.style.width = `${canvasBounds.width}px`;
+      targets.style.height = `${height}px`;
+      targets.hidden = false;
+    }
+
     function resize() {
       const nextWidth = Math.round(canvas.getBoundingClientRect().width || canvas.parentElement.clientWidth);
       const nextDensity = Math.min(2, window.devicePixelRatio || 1);
-      if (nextWidth < 52 || (nextWidth === width && nextDensity === density)) return;
+      if (nextWidth < 52) return;
+      if (nextWidth === width && nextDensity === density) {
+        syncTargets();
+        return;
+      }
 
       width = nextWidth;
       density = nextDensity;
@@ -305,6 +368,7 @@
       for (const [index, phrase] of phrases.entries()) {
         const lines = wrap(phrase, innerWidth, scale);
         const rowHeight = Math.ceil(pad * 2 + lines.length * lineHeight);
+        const rowLetters = [];
         rows.push({
           top,
           height: rowHeight,
@@ -312,22 +376,27 @@
           number: String(index + 1).padStart(2, '0'),
           numberSize: Math.max(11, Math.round(size * .57)),
           numberY: top + pad + lineHeight * .5,
+          letters: rowLetters,
         });
+        const button = buttons[index];
+        button.style.left = '1.5px';
+        button.style.right = '1.5px';
+        button.style.top = `${top + .5}px`;
+        button.style.height = `${rowHeight - 1}px`;
         let baseline = top + pad + size * .88;
         for (const line of lines) {
           let x = textStart;
           for (const character of line) {
             const item = glyph(character);
-            if (item.contours.length) letters.push({ contours: transform(item.contours, x, baseline, scale), delay: 0 });
+            if (item.contours.length) rowLetters.push({ contours: transform(item.contours, x, baseline, scale), delay: 0 });
             x += (item.advance + .004 * unitsPerEm) * scale;
           }
           baseline += lineHeight;
         }
+        letters.push(...rowLetters);
         top += rowHeight + gap;
       }
-      letters.forEach((letter, index) => {
-        letter.delay = index * (duration - traceDuration - fillDuration) / Math.max(1, letters.length - 1);
-      });
+      setTimeline();
 
       height = top - gap + 1;
       canvas.style.height = `${height}px`;
@@ -338,6 +407,7 @@
       clearCompleted();
       render(elapsed);
       panel.classList.add('has-fourier-words');
+      syncTargets();
       requestFrame();
     }
 
@@ -364,7 +434,11 @@
     }
     if (motion.matches && !started) play();
 
-    if (typeof ResizeObserver === 'function') new ResizeObserver(resize).observe(canvas);
+    if (typeof ResizeObserver === 'function') {
+      const observer = new ResizeObserver(resize);
+      observer.observe(canvas);
+      observer.observe(panel);
+    }
     window.addEventListener('resize', resize, { passive: true });
     if (typeof MutationObserver === 'function') {
       new MutationObserver(() => {
@@ -378,7 +452,7 @@
       else requestFrame();
     });
     motion.addEventListener?.('change', () => {
-      if (motion.matches && enabled) play();
+      if (motion.matches && enabled) start(activeRow);
     });
   }
 

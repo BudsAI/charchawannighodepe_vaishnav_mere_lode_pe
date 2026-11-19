@@ -37,6 +37,7 @@
     canvas.tabIndex = showPlot ? 0 : -1;
     canvas.setAttribute('aria-hidden', String(!showPlot));
     interests.setAttribute('aria-hidden', String(showPlot));
+    interests.inert = showPlot;
     dragLabel.hidden = !showPlot;
     viewReset.hidden = !showPlot;
     interests.dispatchEvent(new Event(showPlot ? 'fourier:pause' : 'fourier:play'));
