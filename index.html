@@ -31,11 +31,10 @@
     })();
   </script>
   <link rel="stylesheet" href="launch.css?v=2">
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="styles.css?v=12">
   <link rel="stylesheet" href="theme.css?v=5">
   <link rel="stylesheet" href="research-explorer.css?v=2">
   <link rel="stylesheet" href="credit-explorer.css">
-  <link rel="stylesheet" href="writing-explorers.css">
   <link rel="stylesheet" href="equation-studio.css?v=6">
   <script src="launch.js" defer></script>
   <script src="market-visual.js?v=4" defer></script>
@@ -45,7 +44,6 @@
   <script src="equation-studio.js?v=4" defer></script>
   <script src="research-explorer.js?v=2" defer></script>
   <script src="credit-explorer.js" defer></script>
-  <script src="writing-explorers.js" defer></script>
   <script src="site.js?v=6" defer></script>
 </head>
 <body>
@@ -325,65 +323,12 @@
             <h3>Shrinkage Is All You Need: Evidence from BVARs with SPF Priors</h3>
             <p>This application tests whether priors drawn from the Survey of Professional Forecasters improve Bayesian VAR forecasts. The best-performing model tunes the shrinkage parameter and assigns zero weight to the survey forecasts.</p>
           </div>
-          <figure class="writing-explorer shrinkage-explorer" aria-labelledby="shrinkage-explorer-title">
-            <header class="writing-explorer__heading">
-              <div>
-                <h4 id="shrinkage-explorer-title">Tuning shrinkage lowers forecast errors</h4>
-                <p>One-quarter-ahead US forecasts · unregularized model = 100 · lower is better</p>
-              </div>
-            </header>
-            <div class="writing-explorer__interactive" hidden>
-              <div class="writing-explorer__controls">
-                <label class="writing-explorer__picker" for="forecast-variable">
-                  <span>Variable</span>
-                  <select id="forecast-variable">
-                    <option>GDP growth</option>
-                    <option>Inflation</option>
-                    <option>Unemployment</option>
-                    <option>Industrial production</option>
-                    <option>Short-term interest rate</option>
-                    <option>Long-term interest rate</option>
-                  </select>
-                </label>
-                <p class="writing-explorer__note">Dashed line: unregularized model (100)</p>
-              </div>
-              <div class="shrinkage-explorer__bars" role="group" aria-label="Forecast errors by model">
-                <button type="button" class="shrinkage-explorer__bar" style="--series-color: var(--series-blue)">
-                  <span class="shrinkage-explorer__method">Standard shrinkage</span>
-                  <span class="shrinkage-explorer__track" aria-hidden="true"><span class="shrinkage-explorer__fill"></span></span>
-                  <span class="shrinkage-explorer__value">76.7</span>
-                </button>
-                <button type="button" class="shrinkage-explorer__bar" style="--series-color: var(--series-orange)">
-                  <span class="shrinkage-explorer__method">Survey-informed prior</span>
-                  <span class="shrinkage-explorer__track" aria-hidden="true"><span class="shrinkage-explorer__fill"></span></span>
-                  <span class="shrinkage-explorer__value">91.9</span>
-                </button>
-                <button type="button" class="shrinkage-explorer__bar" style="--series-color: var(--series-purple)">
-                  <span class="shrinkage-explorer__method">Survey prior using several horizons</span>
-                  <span class="shrinkage-explorer__track" aria-hidden="true"><span class="shrinkage-explorer__fill"></span></span>
-                  <span class="shrinkage-explorer__value">73.2</span>
-                </button>
-                <button type="button" class="shrinkage-explorer__bar" style="--series-color: var(--series-teal)">
-                  <span class="shrinkage-explorer__method">Tuned shrinkage, no survey weight</span>
-                  <span class="shrinkage-explorer__track" aria-hidden="true"><span class="shrinkage-explorer__fill"></span></span>
-                  <span class="shrinkage-explorer__value">67.8</span>
-                </button>
-              </div>
-              <div class="shrinkage-explorer__axis" aria-hidden="true">
-                <div class="shrinkage-explorer__scale">
-                  <span style="--tick: 0%">0</span><span style="--tick: 18.182%">20</span>
-                  <span style="--tick: 36.364%">40</span><span style="--tick: 54.545%">60</span>
-                  <span style="--tick: 72.727%">80</span><span style="--tick: 90.909%">100</span>
-                </div>
-              </div>
-              <p class="writing-explorer__axis">Forecast error: unregularized model = 100. Lower is better.</p>
-              <p class="writing-explorer__readout" data-forecast-reading role="status"></p>
-            </div>
-            <figcaption class="writing-explorer__foot">
-              <p>Root mean squared forecast errors. Expanding-window evaluation, 2003–2022.</p>
-              <p>All four approaches use Bayesian priors. The benchmark estimates the VAR without shrinkage.</p>
-              <a class="figure-link original-figure-link" href="assets/shrinkage.webp" data-figure-title="Tuning shrinkage lowers forecast errors" data-figure-alt="Original horizontal bar chart comparing four model forecast errors for six economic variables.">View original figure</a>
-            </figcaption>
+          <figure class="work-figure">
+            <a class="figure-link" href="assets/shrinkage.webp" aria-label="View the Bayesian VAR forecast chart at full size">
+              <img src="assets/shrinkage.webp" width="1500" height="1093" alt="Tuned shrinkage has the lowest one-quarter-ahead forecast error across all six variables shown." loading="lazy" decoding="async">
+              <span class="figure-action" aria-hidden="true">Enlarge figure</span>
+            </a>
+            <figcaption>One-quarter-ahead forecast errors for six U.S. variables, relative to an unregularized VAR benchmark of 100.</figcaption>
           </figure>
         </article>
         <article class="writing-card">
@@ -391,47 +336,12 @@
             <h3>CP and Tucker Tensor Decomposition of Bilateral Trade Data</h3>
             <p>Using bilateral trade data for 27 major economies from 2010 to 2024, this project compares CP and Tucker tensor decompositions. Four exporter–importer patterns and a common time trend provide a compact representation of the trade data.</p>
           </div>
-          <figure class="writing-explorer trade-explorer" aria-labelledby="trade-explorer-title">
-            <header class="writing-explorer__heading">
-              <div>
-                <h4 id="trade-explorer-title">Summarising 15 years of international trade</h4>
-                <p>27 economies · 2010–2024 · 10,935 exporter–importer–year observations</p>
-              </div>
-            </header>
-            <div class="writing-explorer__interactive" hidden>
-              <div class="writing-explorer__controls">
-                <label class="writing-explorer__picker" for="trade-pattern-count">
-                  <span>Number of trade patterns</span>
-                  <select id="trade-pattern-count"></select>
-                </label>
-              </div>
-              <div class="trade-explorer__body">
-                <div class="trade-explorer__chart">
-                  <p class="writing-explorer__axis">Reconstruction fit (%). Higher is better.</p>
-                  <div class="trade-explorer__frame">
-                    <div class="trade-explorer__scale" aria-hidden="true"><span>100</span><span>80</span><span>60</span><span>40</span><span>20</span><span>0</span></div>
-                    <div class="trade-explorer__plot" aria-label="Reconstruction fit by number of trade patterns">
-                      <svg class="trade-explorer__lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
-                      <div class="trade-explorer__hits" role="group" aria-label="Explore pattern counts"></div>
-                    </div>
-                    <div class="trade-explorer__ticks" aria-hidden="true">
-                      <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
-                    </div>
-                  </div>
-                  <p class="writing-explorer__axis trade-explorer__axis-x">Number of trade patterns</p>
-                </div>
-                <div class="trade-explorer__reading">
-                  <p class="trade-explorer__metric" data-trade-value aria-hidden="true">70.9%</p>
-                  <p class="writing-explorer__readout" data-trade-reading role="status">4 trade patterns · 280 parameters · 70.9% reconstruction fit</p>
-                </div>
-              </div>
-            </div>
-            <figcaption class="writing-explorer__foot">
-              <p>CP decomposition. The figure reports the best fit across 20 starting values at each pattern count.</p>
-              <p>Fit = 100 × (1 − relative reconstruction error). This metric measures reconstruction error separately from explained variance.</p>
-              <p>The four-pattern result is labelled in the original figure. All other fit values are approximate readings from the plotted points.</p>
-              <a class="figure-link original-figure-link" href="assets/trade.webp" data-figure-title="Summarising 15 years of international trade" data-figure-alt="Original CP reconstruction fit line chart with four trade patterns highlighted at 70.9 percent fit and 280 parameters.">View original figure</a>
-            </figcaption>
+          <figure class="work-figure">
+            <a class="figure-link" href="assets/trade.webp" aria-label="View the bilateral trade reconstruction chart at full size">
+              <img src="assets/trade.webp" width="1500" height="974" alt="Reconstruction fit rises as the model adds trade patterns. The highlighted model reaches 70.9% fit using four patterns and 280 parameters." loading="lazy" decoding="async">
+              <span class="figure-action" aria-hidden="true">Enlarge figure</span>
+            </a>
+            <figcaption>The four-pattern representation uses 280 parameters for 10,935 observations.</figcaption>
           </figure>
         </article>
       </div>
