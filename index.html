@@ -31,17 +31,19 @@
     })();
   </script>
   <link rel="stylesheet" href="launch.css?v=2">
-  <link rel="stylesheet" href="styles.css?v=9">
+  <link rel="stylesheet" href="styles.css?v=10">
   <link rel="stylesheet" href="theme.css?v=5">
-  <link rel="stylesheet" href="research-explorer.css">
-  <link rel="stylesheet" href="equation-studio.css?v=4">
+  <link rel="stylesheet" href="research-explorer.css?v=2">
+  <link rel="stylesheet" href="credit-explorer.css">
+  <link rel="stylesheet" href="equation-studio.css?v=5">
   <script src="launch.js" defer></script>
-  <script src="market-visual.js?v=3" defer></script>
+  <script src="market-visual.js?v=4" defer></script>
   <script src="equation-parser.js" defer></script>
   <script src="research-glyphs.js" defer></script>
   <script src="research-fourier.js?v=4" defer></script>
-  <script src="equation-studio.js?v=2" defer></script>
-  <script src="research-explorer.js" defer></script>
+  <script src="equation-studio.js?v=3" defer></script>
+  <script src="research-explorer.js?v=2" defer></script>
+  <script src="credit-explorer.js" defer></script>
   <script src="site.js?v=5" defer></script>
 </head>
 <body>
@@ -132,14 +134,14 @@
             </div>
             <div class="equation-presets" role="group" aria-label="Plot presets">
               <button type="button" data-equation-preset="interests" aria-pressed="true">Research interests</button>
-              <button type="button" data-equation-preset="z = sin(x) * cos(y)" aria-pressed="false">Wave</button>
+              <button type="button" data-equation-preset="cos(4*t); 0.44*(t-pi); sin(4*t)" aria-pressed="false">Helix</button>
               <button type="button" data-equation-preset="sin(3*t) * cos(t); sin(3*t) * sin(t); 0" aria-pressed="false">Rose</button>
               <button type="button" data-equation-preset="(2+cos(3*t))*cos(2*t); (2+cos(3*t))*sin(2*t); sin(3*t)" aria-pressed="false">Knot</button>
             </div>
             <form class="equation-form">
               <label class="equation-sr" for="curve-expression">Enter an equation</label>
               <div class="equation-entry">
-                <input id="curve-expression" name="equation" type="text" maxlength="320" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="z = sin(x) * cos(y)" aria-describedby="equation-message">
+                <input id="curve-expression" name="equation" type="text" maxlength="320" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="y = sin(x)" aria-describedby="equation-message">
                 <button type="submit">Plot</button>
               </div>
               <p class="equation-message" id="equation-message" role="status" aria-atomic="true"></p>
@@ -167,7 +169,7 @@
         <p class="section-note">Working papers</p>
       </div>
 
-      <article class="feature">
+      <article class="feature paper-with-chart">
         <div class="work-copy">
           <p class="work-meta">0DTE options · Intraday volatility</p>
           <h3>Too Short to Ignore: Forecasting Intraday Volatility with 0DTE Options</h3>
@@ -177,54 +179,70 @@
             <p>We forecast intraday volatility using high-frequency S&amp;P 500 option and price data, assessing the incremental predictive content of the implied volatility from short-dated options. We develop an interval-specific forecasting framework that aligns volatility measurement and prediction horizons at the intraday level. We show that implied volatility extracted from same-day expiry options (0DTE options) contains statistically and economically meaningful predictive information beyond that of standard regressors. Including 0DTE implied volatility reduces out-of-sample forecast MSE by 19% on average, with particularly pronounced gains at the open and close of the trading session and in the period after FOMC announcements.</p>
           </details>
         </div>
-        <figure class="work-figure">
-          <a class="figure-link" href="assets/volatility.webp" aria-label="View the intraday forecast chart at full size">
-            <img src="assets/volatility.webp" width="1500" height="864" alt="Bar chart showing the biggest forecast-error reductions at market open and close. The overall MSE-weighted reduction is 19.2% and the equal-weighted mean is 16.1%." loading="lazy" decoding="async">
-            <span class="figure-action" aria-hidden="true">Enlarge figure</span>
-          </a>
-          <figcaption>Forecast-error reductions from adding 0DTE implied volatility, by time of day. FOMC days are excluded.</figcaption>
+        <figure class="research-explorer" aria-labelledby="research-explorer-title" aria-describedby="research-explorer-note">
+          <header class="research-explorer__heading">
+            <h4 id="research-explorer-title">Forecasting gain from 0DTE implied volatility across the trading day</h4>
+            <p>Interval 1 (orange) uses the pre-open lag; intervals 2-13 use the preceding intraday interval</p>
+          </header>
+          <div class="research-explorer__interactive" hidden>
+            <fieldset class="research-explorer__benchmarks">
+              <legend class="research-explorer__sr">Emphasize a benchmark</legend>
+              <div class="research-explorer__choices">
+                <label>
+                  <input type="radio" name="forecast-benchmark" value="weighted" checked>
+                  <span class="research-explorer__choice">
+                    <i class="research-explorer__swatch research-explorer__swatch--weighted" aria-hidden="true"></i>
+                    <span>MSE-weighted (headline) = <strong>19.2%</strong></span>
+                  </span>
+                </label>
+                <label>
+                  <input type="radio" name="forecast-benchmark" value="equal">
+                  <span class="research-explorer__choice">
+                    <i class="research-explorer__swatch research-explorer__swatch--equal" aria-hidden="true"></i>
+                    <span>equal-weighted mean of bars = <strong>16.1%</strong></span>
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+            <div class="research-explorer__body">
+              <div class="research-explorer__chart">
+                <p class="research-explorer__axis-title">MSE reduction from 0DTE IV (%)</p>
+                <div class="research-explorer__plot" data-benchmark="weighted" role="group" aria-label="MSE reduction from 0DTE implied volatility by trading interval" aria-describedby="research-explorer-help">
+                  <div class="research-explorer__scale" aria-hidden="true">
+                    <span>35</span><span>30</span><span>25</span><span>20</span><span>15</span><span>10</span><span>5</span><span>0</span>
+                  </div>
+                  <div class="research-explorer__bars"></div>
+                  <span class="research-explorer__rule research-explorer__rule--weighted" aria-hidden="true"></span>
+                  <span class="research-explorer__rule research-explorer__rule--equal" aria-hidden="true"></span>
+                </div>
+                <p class="research-explorer__axis-x">Interval start time</p>
+              </div>
+              <div class="research-explorer__reading">
+                <div>
+                  <p class="research-explorer__reading-label">
+                    Interval starting <time class="research-explorer__time" datetime="09:31">09:31</time>
+                  </p>
+                  <p class="research-explorer__value">34<span>%</span></p>
+                  <p>reduction in forecast MSE</p>
+                </div>
+                <p class="research-explorer__lag">Uses the pre-open lag.</p>
+                <label class="research-explorer__choose-interval">
+                  Select an interval
+                  <select class="research-explorer__intervals"></select>
+                </label>
+                <span class="research-explorer__sr" role="status" aria-atomic="true"></span>
+              </div>
+            </div>
+            <p class="research-explorer__help" id="research-explorer-help">Select a bar or use the arrow keys to explore.</p>
+          </div>
+          <noscript>
+            <img class="research-explorer__fallback" src="assets/volatility.webp" width="1500" height="864" alt="Bar chart of forecast MSE reductions across 13 intervals. The 09:31 interval shows a 34% reduction and the 15:30 interval shows 30%. The MSE-weighted reduction is 19.2%, and the equal-weighted mean is 16.1%." loading="lazy" decoding="async">
+          </noscript>
+          <figcaption class="research-explorer__foot" id="research-explorer-note">Forecast-error reductions from adding 0DTE implied volatility, by time of day. Higher bars indicate larger gains. FOMC days are excluded. Bar labels are rounded as in the original figure.</figcaption>
         </figure>
       </article>
 
-      <section class="research-explorer" aria-labelledby="research-explorer-title" hidden>
-        <div class="research-explorer__heading">
-          <h3 id="research-explorer-title">Forecasting gains by time of day</h3>
-          <fieldset class="research-explorer__benchmarks">
-            <legend>Comparison line</legend>
-            <div class="research-explorer__choices">
-              <label><input type="radio" name="forecast-benchmark" value="19.2" checked><span><strong>19.2%</strong> MSE-weighted</span></label>
-              <label><input type="radio" name="forecast-benchmark" value="16.1"><span><strong>16.1%</strong> Equal-weighted</span></label>
-            </div>
-          </fieldset>
-        </div>
-        <div class="research-explorer__body">
-          <div class="research-explorer__chart">
-            <p class="research-explorer__axis-title">Reduction in forecast MSE</p>
-            <div class="research-explorer__plot" role="group" aria-label="Forecast error reduction by trading interval" aria-describedby="research-explorer-help">
-              <div class="research-explorer__scale" aria-hidden="true">
-                <span>40%</span><span>30%</span><span>20%</span><span>10%</span><span>0%</span>
-              </div>
-              <div class="research-explorer__bars"></div>
-              <span class="research-explorer__rule" aria-hidden="true"></span>
-            </div>
-            <p class="research-explorer__axis-x">Interval start time</p>
-          </div>
-          <div class="research-explorer__reading">
-            <p class="research-explorer__reading-label">
-              Interval starting <time class="research-explorer__time" datetime="09:31">09:31</time>
-            </p>
-            <p class="research-explorer__value">34<span>%</span></p>
-            <p>reduction in forecast MSE</p>
-            <p class="research-explorer__lag">Uses pre-open implied volatility.</p>
-            <span class="research-explorer__sr" role="status" aria-atomic="true"></span>
-          </div>
-        </div>
-        <p class="research-explorer__foot" id="research-explorer-help">
-          Select a bar or use the arrow keys to explore. FOMC days are excluded. Bar values are rounded as labeled in the paper’s figure.
-        </p>
-      </section>
-
-      <article class="work-row">
+      <article class="work-row paper-with-chart">
         <div class="work-copy">
           <p class="work-meta">Retail options · Household credit</p>
           <h3>Real Effect of Speculation: Option Market to Credit Market</h3>
@@ -234,13 +252,64 @@
             <p>Is the global surge in retail options trading debt-driven? Combining India’s countrywide administrative credit registry with near-universe trades from one of the world’s largest options exchanges, we show that option trading and consumer borrowing move together: areas with higher participation in a quarter see more credit applications and larger loan balances. For identification, we exploit a regulatory change that raised the minimum tradable quantity of options. The higher participation cost drove some households out, but those who remained doubled their outlay to meet the new threshold. Areas more exposed to the change saw faster consumer credit growth. The additional borrowing came through credit cards, overdrafts, gold loans, and consumer loans from FinTech and non-bank lenders. Mortgages and vehicle loans did not respond, as they would if improving local economic conditions were driving credit growth. Individual accounts at a large bank and its broker tell the same story: customers borrow more in the quarters in which they trade more, and the premium they pay for options rises after they take out a personal, consumer, or gold loan. Our results suggest that household options participation is partly debt-financed, and that regulations raising participation costs can unintentionally increase borrowing.</p>
           </details>
         </div>
-        <figure class="work-figure">
-          <a class="figure-link" href="assets/credit.webp" aria-label="View the credit response chart at full size">
-            <img src="assets/credit.webp" width="1402" height="603" alt="Two event-study panels show the number of loan accounts and approved loan amounts rising after the July 2015 rule change in more exposed areas." loading="lazy" decoding="async">
-            <span class="figure-action" aria-hidden="true">Enlarge figure</span>
-          </a>
-          <figcaption>Estimated credit response to the 2015 increase in minimum option-trade size. Bars show 95% confidence intervals.</figcaption>
-        </figure>
+        <section class="credit-explorer" aria-labelledby="credit-explorer-title" hidden>
+          <div class="credit-explorer__heading">
+            <h3 id="credit-explorer-title">Estimated credit response</h3>
+            <label class="credit-explorer__picker" for="credit-quarter">
+              <span>Quarter</span>
+              <select id="credit-quarter" data-credit-quarter></select>
+            </label>
+          </div>
+          <ul class="credit-explorer__legend" aria-label="Figure legend">
+            <li><span class="credit-explorer__swatch is-before" aria-hidden="true"></span>before the circular</li>
+            <li><span class="credit-explorer__swatch is-from" aria-hidden="true"></span>from the circular</li>
+            <li><span class="credit-explorer__swatch is-omitted" aria-hidden="true"></span>omitted period, at zero</li>
+          </ul>
+          <div class="credit-explorer__panels">
+            <figure class="credit-explorer__panel" aria-labelledby="credit-live-title">
+              <figcaption class="credit-explorer__panel-title">
+                <h4 id="credit-live-title">Live accounts</h4>
+                <p>0.064*** (0.011)</p>
+              </figcaption>
+              <div class="credit-explorer__coordinates">
+                <p class="credit-explorer__axis-y">elasticity</p>
+                <div class="credit-explorer__plot" data-credit-panel="live" role="group" aria-label="Live accounts by quarter" aria-describedby="credit-explorer-help"></div>
+              </div>
+              <p class="credit-explorer__axis-x">quarter</p>
+            </figure>
+            <figure class="credit-explorer__panel" aria-labelledby="credit-sanctioned-title">
+              <figcaption class="credit-explorer__panel-title">
+                <h4 id="credit-sanctioned-title">Sanctioned amount</h4>
+                <p>0.028*** (0.011)</p>
+              </figcaption>
+              <div class="credit-explorer__coordinates">
+                <p class="credit-explorer__axis-y">elasticity</p>
+                <div class="credit-explorer__plot" data-credit-panel="sanctioned" role="group" aria-label="Sanctioned amount by quarter" aria-describedby="credit-explorer-help"></div>
+              </div>
+              <p class="credit-explorer__axis-x">quarter</p>
+            </figure>
+          </div>
+          <div class="credit-explorer__readout">
+            <div class="credit-explorer__active">
+              <strong data-credit-active-quarter></strong>
+              <span data-credit-active-phase></span>
+            </div>
+            <dl class="credit-explorer__metrics">
+              <div>
+                <dt>Live accounts</dt>
+                <dd data-credit-live></dd>
+              </div>
+              <div>
+                <dt>Sanctioned amount</dt>
+                <dd data-credit-sanctioned></dd>
+              </div>
+            </dl>
+            <span class="credit-explorer__sr" role="status" aria-atomic="true" data-credit-status></span>
+          </div>
+          <p class="credit-explorer__foot" id="credit-explorer-help">Select a point or use the quarter picker. Use the arrow keys to move between focused points.</p>
+          <p class="credit-explorer__foot">Estimated credit response in areas more exposed to the 2015 increase in minimum option-trade size. Left: loan accounts; right: approved loan amounts. Bars show 95% confidence intervals. Interactive values and interval bounds are approximate readings from the original figure, rounded to three decimal places.</p>
+        </section>
+        <noscript><p><a href="assets/credit.webp">View the original credit response figure</a>.</p></noscript>
       </article>
     </section>
 

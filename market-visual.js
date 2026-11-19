@@ -131,11 +131,13 @@
     }
   }
 
-  function strokeProgress(drawing, line) {
+  function strokeProgress(drawing, line, sequentialPaths) {
+    if (drawing >= 1) return 1;
+    if (sequentialPaths) return clamp(drawing * sequentialPaths - line, 0, 1);
     return clamp((drawing - line / pathCount * .31) / .71, 0, 1);
   }
 
-  function limitDrawing(geometry, drawing) {
+  function limitDrawing(geometry, drawing, sequentialPaths) {
     for (let line = 0; line < pathCount; line++) {
       const start = line * pointsPerPath;
       const end = start + pointsPerPath;
@@ -144,7 +146,7 @@
         if (geometry.edges[point]) last = point;
       }
 
-      const limit = start + (last - start) * strokeProgress(drawing, line);
+      const limit = start + (last - start) * strokeProgress(drawing, line, sequentialPaths);
       const next = Math.ceil(limit);
       if (next > limit && geometry.edges[next]) {
         const startOfEdge = (next - 1) * 3;
@@ -205,6 +207,7 @@
     let hasShape = false;
     let morph = null;
     let draw = null;
+    let sequentialPaths = 0;
     let drag = null;
     let hoverYaw = 0;
     let hoverPitch = 0;
@@ -388,7 +391,7 @@
       const drawing = draw === null ? 1 : clamp(draw / drawDuration, 0, 1);
       for (let line = 0; line < pathCount; line++) {
         const start = line * pointsPerPath;
-        limits[line] = start + (ends[line] - start) * strokeProgress(drawing, line);
+        limits[line] = start + (ends[line] - start) * strokeProgress(drawing, line, sequentialPaths);
       }
       if (style.glow > .006) {
         ink.strokeStyle = colors.glow;
@@ -483,7 +486,8 @@
     function show(paths, { intro = false, kind: nextKind = 'curve' } = {}) {
       to.vertices.fill(0);
       to.edges.fill(0);
-      for (let line = 0; line < Math.min(paths?.length || 0, pathCount); line++) fitPath(to, paths[line], line);
+      const visiblePaths = Math.min(paths?.length || 0, pathCount);
+      for (let line = 0; line < visiblePaths; line++) fitPath(to, paths[line], line);
       const instant = reduce() || !hasShape || intro;
 
       kind = nextKind;
@@ -496,9 +500,10 @@
         Object.assign(camera, target);
         morph = null;
         draw = intro && !reduce() ? 0 : null;
+        sequentialPaths = kind === 'curve' ? visiblePaths : 0;
       } else {
         copy(current, from);
-        if (draw !== null) limitDrawing(from, clamp(draw / drawDuration, 0, 1));
+        if (draw !== null) limitDrawing(from, clamp(draw / drawDuration, 0, 1), sequentialPaths);
         collapseHidden(from, to);
         collapseHidden(to, from);
         morph = 0;

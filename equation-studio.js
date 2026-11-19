@@ -14,9 +14,9 @@
   const presets = [...studio.querySelectorAll('[data-equation-preset]')];
   if (!canvas.getContext('2d')) return;
 
-  const plot = window.PortfolioPlot.create(canvas, {
-    reducedMotion: matchMedia('(prefers-reduced-motion: reduce)')
-  });
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  const plot = window.PortfolioPlot.create(canvas, { reducedMotion: motion });
+  const header = document.querySelector('.site-header');
 
   function selectPreset(value) {
     for (const button of presets) {
@@ -49,12 +49,23 @@
     setMessage('Research interests displayed.');
   }
 
-  function drawEquation(source) {
+  function revealPlot() {
+    const box = viewport.getBoundingClientRect();
+    const top = Math.max(box.top, header?.getBoundingClientRect().bottom ?? 0);
+    const visible = Math.min(box.bottom, window.innerHeight) - top;
+    if (visible < Math.min(box.height * .42, 160)) {
+      viewport.scrollIntoView({ block: 'center', behavior: motion.matches ? 'instant' : 'smooth' });
+    }
+  }
+
+  function drawEquation(source, presetLabel) {
     try {
       const { paths, kind } = window.PortfolioEquations.plot(source);
-      const title = kind === 'surface' ? '3D surface' : 'Equation curve';
-      plot.show(paths, { kind });
+      const enteringPlot = viewport.dataset.equationView !== 'plot';
+      const title = presetLabel ?? (kind === 'surface' ? '3D surface' : 'Equation curve');
       setView('plot', title);
+      plot.show(paths, { kind, intro: enteringPlot });
+      if (enteringPlot) revealPlot();
       selectPreset(source);
       setMessage(`${title} plotted.`);
     } catch (error) {
@@ -77,7 +88,7 @@
         showInterests();
       } else {
         input.value = value;
-        drawEquation(value);
+        drawEquation(value, button.textContent.trim());
       }
     });
   }

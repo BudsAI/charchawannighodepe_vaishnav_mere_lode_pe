@@ -4,9 +4,11 @@ const forecastGains = [
   ["13:30", 18], ["14:00", 28], ["14:30", 20], ["15:00", 12],
   ["15:30", 30]
 ];
-const plotMaximum = 40;
+const plotMaximum = 35;
+const benchmarkGains = { weighted: 19.2, equal: 16.1 };
 
 function initializeResearchExplorer(explorer) {
+  const interactive = explorer.querySelector(".research-explorer__interactive");
   const plot = explorer.querySelector(".research-explorer__plot");
   const bars = explorer.querySelector(".research-explorer__bars");
   const time = explorer.querySelector(".research-explorer__time");
@@ -14,6 +16,7 @@ function initializeResearchExplorer(explorer) {
   const lag = explorer.querySelector(".research-explorer__lag");
   const status = explorer.querySelector("[role='status']");
   const benchmarks = explorer.querySelector(".research-explorer__benchmarks");
+  const intervalSelect = explorer.querySelector(".research-explorer__intervals");
   const percent = value.querySelector("span");
   let selected = 0;
   let active = 0;
@@ -22,6 +25,7 @@ function initializeResearchExplorer(explorer) {
     const button = document.createElement("button");
     const fill = document.createElement("span");
     const tick = document.createElement("span");
+    const gainLabel = document.createElement("span");
 
     button.type = "button";
     button.className = "research-explorer__bar";
@@ -36,12 +40,21 @@ function initializeResearchExplorer(explorer) {
     tick.className = "research-explorer__tick";
     tick.textContent = interval;
     tick.setAttribute("aria-hidden", "true");
-    button.append(fill, tick);
+    gainLabel.className = "research-explorer__gain";
+    gainLabel.textContent = gain;
+    gainLabel.setAttribute("aria-hidden", "true");
+    button.append(fill, gainLabel, tick);
     return button;
   });
 
   buttons[active].classList.add("is-active");
   bars.replaceChildren(...buttons);
+  intervalSelect.replaceChildren(...forecastGains.map(([interval, gain], position) => {
+    const option = document.createElement("option");
+    option.value = position;
+    option.textContent = `${interval} · ${gain}%`;
+    return option;
+  }));
 
   function showReading(position) {
     if (position === active) return;
@@ -54,8 +67,8 @@ function initializeResearchExplorer(explorer) {
     time.dateTime = interval;
     value.replaceChildren(String(gain), percent);
     lag.textContent = position === 0
-      ? "Uses pre-open implied volatility."
-      : "Uses implied volatility from the preceding interval.";
+      ? "Uses the pre-open lag."
+      : "Uses the preceding intraday interval.";
   }
 
   function select(position, announce = false) {
@@ -65,6 +78,7 @@ function initializeResearchExplorer(explorer) {
       buttons[position].tabIndex = 0;
       buttons[position].setAttribute("aria-pressed", "true");
       selected = position;
+      intervalSelect.value = String(position);
     }
 
     showReading(position);
@@ -120,14 +134,15 @@ function initializeResearchExplorer(explorer) {
     buttons[next].focus();
   });
 
-  function setBenchmark(input) {
-    if (!input || !input.matches("input[type='radio']")) return;
-    plot.style.setProperty("--benchmark", `${Number(input.value) / plotMaximum * 100}%`);
-  }
+  intervalSelect.addEventListener("change", () => select(Number(intervalSelect.value), true));
 
-  benchmarks.addEventListener("change", event => setBenchmark(event.target));
-  setBenchmark(benchmarks.querySelector("input:checked"));
-  explorer.hidden = false;
+  for (const [name, gain] of Object.entries(benchmarkGains)) {
+    plot.style.setProperty(`--benchmark-${name}`, `${gain / plotMaximum * 100}%`);
+  }
+  benchmarks.addEventListener("change", event => {
+    if (event.target.matches("input[type='radio']")) plot.dataset.benchmark = event.target.value;
+  });
+  interactive.hidden = false;
 }
 
 for (const explorer of document.querySelectorAll(".research-explorer")) {

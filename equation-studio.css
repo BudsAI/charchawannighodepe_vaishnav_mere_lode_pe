@@ -80,7 +80,7 @@
   display: grid;
   align-content: center;
   min-width: 0;
-  padding: 2.25rem clamp(.56rem, 2vw, 1.4rem) .85rem;
+  padding: 2.7rem clamp(.56rem, 2vw, 1.4rem) .85rem;
   opacity: 1;
   transition: opacity .5s var(--curve);
 }
@@ -124,6 +124,13 @@
   color: var(--plot-caption);
   font: 600 .79rem/1.35 var(--display);
   pointer-events: none;
+}
+[data-equation-view="interests"] .equation-scene {
+  top: .47rem;
+  left: .55rem;
+  font-size: clamp(1.04rem, 1.57vw, 1.36rem);
+  font-weight: 700;
+  letter-spacing: -.025em;
 }
 .equation-reset {
   position: absolute;
@@ -176,6 +183,7 @@
   font: 600 .835rem/1.25 var(--sans);
   cursor: pointer;
 }
+.equation-presets [data-equation-preset="interests"] { font-size: .91rem; font-weight: 700; }
 .equation-presets button:hover, .equation-presets button[aria-pressed="true"] {
   border-color: var(--accent-line);
   background: var(--accent-wash);

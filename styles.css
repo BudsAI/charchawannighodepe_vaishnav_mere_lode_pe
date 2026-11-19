@@ -295,6 +295,8 @@ img { max-width: 100%; }
 }
 .feature { background: radial-gradient(ellipse at 9% 12%, var(--feature-start), transparent 80%), var(--surface); }
 .work-row { margin-top: clamp(1.05rem, 3vw, 2.05rem); background: var(--surface); }
+.paper-with-chart { grid-template-columns: minmax(0, 1fr); gap: clamp(1rem, 3vw, 2rem); }
+.paper-with-chart .work-copy { max-width: 64rem; }
 .work-meta { margin-bottom: .64rem; }
 .work-copy h3 { font-size: clamp(2.5rem, 4.4vw, 3.95rem); line-height: .97; text-wrap: balance; }
 .coauthors { margin-top: .89rem; color: var(--quiet); font-size: .95rem; }
