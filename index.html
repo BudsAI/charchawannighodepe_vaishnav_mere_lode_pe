@@ -23,20 +23,20 @@
     (() => {
       if ((location.hash && location.hash !== '#home') || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       try {
-        if (sessionStorage.getItem('vg-intro-seen')) return;
-        sessionStorage.setItem('vg-intro-seen', '1');
+        if (sessionStorage.getItem('vg-intro-seen-v2')) return;
+        sessionStorage.setItem('vg-intro-seen-v2', '1');
       } catch {}
       document.documentElement.dataset.launchStart = performance.now();
       document.documentElement.classList.add('has-launch');
     })();
   </script>
-  <link rel="stylesheet" href="launch.css?v=2">
+  <link rel="stylesheet" href="launch.css?v=3">
   <link rel="stylesheet" href="styles.css?v=12">
   <link rel="stylesheet" href="theme.css?v=5">
   <link rel="stylesheet" href="research-explorer.css?v=2">
   <link rel="stylesheet" href="credit-explorer.css">
   <link rel="stylesheet" href="equation-studio.css?v=6">
-  <script src="launch.js" defer></script>
+  <script src="launch.js?v=2" defer></script>
   <script src="market-visual.js?v=4" defer></script>
   <script src="equation-parser.js" defer></script>
   <script src="research-glyphs.js" defer></script>
