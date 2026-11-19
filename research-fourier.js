@@ -5,6 +5,7 @@
   const { unitsPerEm, glyphs } = letterforms;
   const root = document.documentElement;
   const twoPi = Math.PI * 2;
+  const playbackRate = .64;
   const duration = 2680;
   const rowDuration = 1340;
   const traceDuration = 510;
@@ -301,7 +302,8 @@
       frame = 0;
       if (!canPlay()) return;
       const end = endTime();
-      elapsed = Math.min(end, elapsed + (previousFrame === null ? 1000 / 60 : Math.min(42, now - previousFrame)));
+      const delta = previousFrame === null ? 1000 / 60 : Math.min(42, now - previousFrame);
+      elapsed = Math.min(end, elapsed + delta * playbackRate);
       previousFrame = now;
       playing = elapsed < end;
       render(elapsed);
