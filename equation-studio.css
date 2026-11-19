@@ -1,0 +1,246 @@
+.portrait-stage {
+  --plot-board: #0c151c;
+  --plot-grid: #9abcd418;
+  --plot-line: #a8bec755;
+  --plot-caption: #eff5e4;
+  --plot-error: #ffb8ae;
+  align-self: start;
+  min-width: 0;
+  padding: clamp(.65rem, 1.5vw, 1.05rem);
+  border: 1px solid var(--line);
+  border-radius: .45rem;
+  background: radial-gradient(ellipse at 94% 10%, var(--stage-glow), transparent 60%), var(--stage);
+}
+
+[data-theme="light"] .portrait-stage {
+  --plot-board: #e7ede4;
+  --plot-grid: #2a54411b;
+  --plot-line: #53695169;
+  --plot-caption: #273e2e;
+  --plot-error: #8c271d;
+}
+
+.portrait-composition { display: grid; grid-template-columns: minmax(0, .55fr) minmax(0, 1.45fr); align-items: center; gap: clamp(.4rem, 1vw, .68rem); }
+.portrait-plate { display: grid; grid-template-rows: minmax(0, 1fr) auto; min-width: 0; }
+.portrait-frame { position: relative; min-width: 0; }
+.portrait {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--plot-line);
+  border-radius: .27rem;
+  background: #171f1f;
+}
+.portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  aspect-ratio: .72;
+  object-fit: cover;
+  object-position: 55% 25%;
+}
+.profile-caption {
+  padding-top: .5rem;
+  color: var(--stage-caption);
+  font: 550 .825rem/1.3 var(--display);
+}
+
+.equation-viewport {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-self: start;
+  min-width: 0;
+  min-height: clamp(20rem, 28vw, 24.5rem);
+  overflow: hidden;
+  border: 1px solid var(--plot-line);
+  border-radius: .27rem;
+  background:
+    radial-gradient(ellipse at 61% 45%, transparent 32%, var(--plot-board)),
+    repeating-linear-gradient(90deg, transparent 0, transparent 25px, var(--plot-grid) 25px, var(--plot-grid) 26px),
+    repeating-linear-gradient(transparent 0, transparent 25px, var(--plot-grid) 25px, var(--plot-grid) 26px),
+    var(--plot-board);
+}
+.portrait-field {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+  cursor: grab;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .5s var(--curve);
+}
+[data-equation-view="plot"] .portrait-field { opacity: 1; pointer-events: auto; }
+.equation-interest-layer {
+  display: grid;
+  align-content: center;
+  min-width: 0;
+  padding: 2.25rem clamp(.56rem, 2vw, 1.4rem) .85rem;
+  opacity: 1;
+  transition: opacity .5s var(--curve);
+}
+[data-equation-view="plot"] .equation-interest-layer { opacity: 0; }
+.interests-fourier { display: block; width: 100%; }
+.interests-fourier[hidden], .equation-reset[hidden] { display: none; }
+.equation-interest-layer ol {
+  display: grid;
+  margin: 0;
+  gap: .39rem;
+  padding: 0;
+  color: var(--plot-caption);
+  font: 600 clamp(1rem, 2vw, 1.57rem)/1.23 var(--display);
+  list-style: decimal-leading-zero inside;
+}
+.equation-interest-layer li {
+  padding: .29rem .47rem;
+  border: 1px solid var(--plot-line);
+  border-radius: .24rem;
+}
+.equation-interest-layer li::marker { color: var(--accent); }
+
+.has-fourier-words [data-fourier-fallback] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.portrait-field:active { cursor: grabbing; }
+.portrait-field:focus-visible { outline-offset: -3px; }
+.equation-scene {
+  position: absolute;
+  top: .48rem;
+  left: .55rem;
+  padding: .11rem .3rem;
+  border-radius: .18rem;
+  background: var(--plot-board);
+  color: var(--plot-caption);
+  font: 600 .79rem/1.35 var(--display);
+  pointer-events: none;
+}
+.equation-reset {
+  position: absolute;
+  right: .45rem;
+  bottom: .42rem;
+  min-height: 1.7rem;
+  padding: .15rem .37rem;
+  border: 1px solid var(--plot-line);
+  border-radius: .2rem;
+  background: var(--plot-board);
+  color: var(--plot-caption);
+  font: 550 .75rem/1.25 var(--sans);
+  cursor: pointer;
+}
+.equation-reset:hover { border-color: var(--accent); }
+
+.equation-controls {
+  margin-top: .75rem;
+  padding: .7rem clamp(.55rem, 1.4vw, .9rem);
+  border: 1px solid var(--plot-line);
+  border-radius: .28rem;
+  background: var(--plot-board);
+}
+.equation-toolbar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .2rem .55rem;
+}
+.equation-toolbar h2 {
+  color: var(--ink);
+  font: 650 1.14rem/1.28 var(--display);
+  letter-spacing: -.024em;
+}
+.equation-toolbar p { color: var(--quiet); font-size: .825rem; }
+.equation-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .28rem .38rem;
+  margin-block: .58rem;
+}
+.equation-presets button {
+  min-height: 1.78rem;
+  padding: .18rem .51rem;
+  border: 1px solid var(--plot-line);
+  border-radius: .22rem;
+  background: transparent;
+  color: var(--quiet);
+  font: 600 .835rem/1.25 var(--sans);
+  cursor: pointer;
+}
+.equation-presets button:hover, .equation-presets button[aria-pressed="true"] {
+  border-color: var(--accent-line);
+  background: var(--accent-wash);
+  color: var(--accent);
+}
+.equation-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: .35rem;
+}
+.equation-entry input {
+  min-width: 0;
+  width: 100%;
+  padding: .48rem .58rem;
+  border: 1px solid var(--plot-line);
+  border-radius: .24rem;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1rem/1.35 ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+.equation-entry input::placeholder { color: var(--quiet); opacity: .9; }
+.equation-entry input[aria-invalid="true"] { border-color: var(--plot-error); }
+.equation-entry button {
+  padding: .36rem .72rem;
+  border: 1px solid transparent;
+  border-radius: .22rem;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font: 700 .875rem/1.3 var(--display);
+  cursor: pointer;
+}
+.equation-entry button:hover { background: var(--accent-hover); }
+.equation-message {
+  margin-top: .35rem;
+  color: var(--plot-error);
+  font-size: .86rem;
+  overflow-wrap: anywhere;
+}
+.equation-message:empty { margin-top: 0; }
+.equation-message.is-quiet, .equation-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 545px) {
+  .portrait-composition { grid-template-columns: 1fr; }
+  .portrait-plate { width: min(66%, 13rem); justify-self: center; }
+  .portrait img { aspect-ratio: 1.02; }
+  .profile-caption { text-align: center; }
+  .equation-viewport { min-height: clamp(20rem, 85vw, 22rem); }
+}
+@media screen and (forced-colors: active) {
+  .equation-viewport { forced-color-adjust: none; }
+}
+@media print {
+  .portrait-composition { display: block; }
+  .portrait-plate { max-width: 13rem; }
+  .equation-viewport { min-height: 0; margin-top: .6rem; background: none; border: 0; }
+  .equation-interest-layer { position: static; padding: 0; opacity: 1 !important; }
+  .equation-interest-layer ol { color: var(--ink); }
+  .has-fourier-words [data-fourier-fallback] { position: static; width: auto; height: auto; overflow: visible; clip-path: none; white-space: normal; }
+  .interests-fourier, .portrait-field, .equation-scene, .equation-reset, .equation-controls { display: none; }
+  .portrait-stage { background: none; }
+}
