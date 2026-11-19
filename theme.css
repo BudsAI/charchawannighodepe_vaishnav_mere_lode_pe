@@ -1,0 +1,27 @@
+@media screen {
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --paper: #f3f1e8;
+    --surface: #fbf9f0;
+    --raised: #fbf9f0;
+    --ink: #1d2427;
+    --quiet: #475359;
+    --line: #bec7bf;
+    --accent: #415a21;
+    --accent-contrast: #fffef6;
+    --accent-hover: #31451a;
+    --accent-wash: #536e2812;
+    --accent-line: #70895a;
+    --link-line: #718364;
+    --stage: #dfe7df;
+    --stage-glow: #c3d6c6;
+    --stage-caption: #253936;
+    --feature-start: #e0e7d5;
+    --header: #f3f1e8f5;
+    --art: radial-gradient(ellipse at 82% 15%, #d9e4d481, transparent 48%);
+    --footer: radial-gradient(ellipse at 10% 7%, #dbe7d3, transparent 72%), #e9eadf;
+  }
+}
+@media screen and (forced-colors: active) {
+  .portrait-field { display: none; }
+}

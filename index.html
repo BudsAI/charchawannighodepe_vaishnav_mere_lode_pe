@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Vaishnav Garg is a Ph.D. candidate at ESSEC Business School studying financial econometrics, macro-finance, and high-frequency finance.">
+  <meta name="theme-color" content="#101116">
+  <script>
+    (() => {
+      let saved;
+      try { saved = localStorage.getItem('vaishnav-theme'); } catch {}
+      const theme = saved === 'light' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = theme;
+      document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#101116' : '#f3f1e8';
+    })();
+  </script>
+  <title>Vaishnav Garg | Financial Econometrics &amp; Macro-Finance</title>
+  <link rel="icon" href="assets/favicon.png?v=3" type="image/png">
+  <link rel="preload" href="assets/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin>
+  <script>
+    (() => {
+      if ((location.hash && location.hash !== '#home') || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      try {
+        if (sessionStorage.getItem('vg-intro-seen')) return;
+        sessionStorage.setItem('vg-intro-seen', '1');
+      } catch {}
+      document.documentElement.dataset.launchStart = performance.now();
+      document.documentElement.classList.add('has-launch');
+    })();
+  </script>
+  <link rel="stylesheet" href="launch.css?v=2">
+  <link rel="stylesheet" href="styles.css?v=6">
+  <link rel="stylesheet" href="theme.css?v=4">
+  <link rel="stylesheet" href="research-explorer.css">
+  <script src="launch.js" defer></script>
+  <script src="market-visual.js" defer></script>
+  <script src="research-explorer.js" defer></script>
+  <script src="site.js?v=5" defer></script>
+</head>
+<body>
+  <div class="launch-screen" hidden aria-hidden="true">
+    <div class="launch-lockup">
+      <span class="launch-monogram">VG<span>.</span></span>
+      <span class="launch-signal"></span>
+    </div>
+  </div>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner shell">
+      <a class="wordmark" href="#home">
+        <span class="brand-mark" aria-hidden="true">VG<span>.</span></span>
+        <span>Vaishnav Garg</span>
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#research">Research</a>
+        <a href="#teaching">Teaching</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <button class="theme-switch" type="button" aria-label="Switch color theme" hidden>
+          <span class="theme-icon" aria-hidden="true"></span>
+        </button>
+        <a class="cv-link" href="assets/vaishnav-garg-cv.pdf" download>CV <span>(PDF)</span></a>
+      </div>
+    </div>
+    <span class="reading-progress" aria-hidden="true"></span>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <div class="opening">
+      <section id="home" class="hero shell" aria-labelledby="hero-title" tabindex="-1">
+        <div class="hero-mast">
+          <p class="eyebrow hero-kicker">Ph.D. candidate <span aria-hidden="true">/</span> ESSEC Business School</p>
+          <h1 id="hero-title">Vaishnav <em>Garg<span aria-hidden="true">.</span></em></h1>
+        </div>
+        <div class="hero-copy">
+          <section id="about" class="hero-about" aria-labelledby="about-title">
+            <h2 id="about-title">About me</h2>
+            <div class="bio prose">
+              <p>I’m a third-year Ph.D. candidate in the <a href="https://essec.edu/en/pages/concentration-data-analytics/">Data Analytics concentration</a> at ESSEC Business School, supervised by <a href="https://roberto-reno.faculty.essec.edu/">Roberto Renò</a>. I study what short-dated options reveal about intraday volatility and how options trading relates to household borrowing.</p>
+              <p>Before ESSEC, I worked as a research associate at <a href="https://www.cafral.org.in/research">CAFRAL, Reserve Bank of India</a>, and as a research assistant at the <a href="https://www.iima.ac.in/faculty-research/centers/Brij-Disa-Centre-for-Data-Science-and-Artificial-Intelligence">Centre for Data Science and Artificial Intelligence</a> at IIM Ahmedabad. I hold a BS–MS in Mathematics from <a href="https://math.iiserkol.ac.in/">IISER Kolkata</a>.</p>
+            </div>
+          </section>
+          <div class="hero-actions">
+            <a class="primary-link" href="assets/vaishnav-garg-cv.pdf" download>Download CV</a>
+            <a class="secondary-link" href="#research">Explore my research</a>
+          </div>
+        </div>
+        <figure class="profile portrait-stage">
+          <canvas class="portrait-field" aria-hidden="true"></canvas>
+          <div class="portrait-frame">
+            <picture class="portrait">
+              <img src="assets/vaishnav-garg.webp"
+                   srcset="assets/vaishnav-garg-small.webp 478w, assets/vaishnav-garg.webp 896w"
+                   sizes="(max-width: 760px) 52vw, (max-width: 1050px) 24vw, 306px"
+                   width="896" height="1200"
+                   alt="Vaishnav Garg" fetchpriority="high">
+            </picture>
+          </div>
+          <figcaption class="profile-caption">Data Analytics (Finance)</figcaption>
+        </figure>
+        <div class="hero-details">
+          <aside class="hero-interests" aria-labelledby="interests-title">
+            <h2 id="interests-title" class="eyebrow">Research interests</h2>
+            <ul>
+              <li>Financial econometrics</li>
+              <li>0DTE options</li>
+              <li>Macro-finance</li>
+              <li>High-frequency finance</li>
+              <li>Financial networks and systemic risk</li>
+            </ul>
+          </aside>
+          <aside class="visit" aria-labelledby="visit-title">
+            <div class="visit-meta">
+              <h2 id="visit-title" class="eyebrow">Upcoming visit</h2>
+              <p class="visit-date">Feb–Dec 2027</p>
+            </div>
+            <div>
+              <p class="visit-title">Visiting Ph.D. Scholar at <a href="https://economics.princeton.edu/">Princeton University</a></p>
+              <p class="visit-detail">Department of Economics · Hosted by Caio Almeida and Markus Brunnermeier</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </div>
+
+    <section id="research" class="section shell" aria-labelledby="research-title">
+      <div class="section-heading">
+        <h2 id="research-title">Selected <em>research</em></h2>
+        <p class="section-note">Working papers</p>
+      </div>
+
+      <article class="feature">
+        <div class="work-copy">
+          <p class="work-meta">0DTE options · Intraday volatility</p>
+          <h3>Too Short to Ignore: Forecasting Intraday Volatility with 0DTE Options</h3>
+          <p class="coauthors">With <a href="https://www.unipi.it/en/about-us/organisation/people/fulvio-corsi-126164-en/">Fulvio Corsi</a> (University of Pisa), <a href="https://sites.google.com/view/nicolafusari">Nicola Fusari</a> (Johns Hopkins Carey Business School), and <a href="https://roberto-reno.faculty.essec.edu/">Roberto Renò</a> (ESSEC Business School).</p>
+          <details class="abstract">
+            <summary aria-label="Read abstract for Too Short to Ignore">Read abstract</summary>
+            <p>We forecast intraday volatility using high-frequency S&amp;P 500 option and price data, assessing the incremental predictive content of the implied volatility from short-dated options. We develop an interval-specific forecasting framework that aligns volatility measurement and prediction horizons at the intraday level. We show that implied volatility extracted from same-day expiry options (0DTE options) contains statistically and economically meaningful predictive information beyond that of standard regressors. Including 0DTE implied volatility reduces out-of-sample forecast MSE by 19% on average, with particularly pronounced gains at the open and close of the trading session and in the period after FOMC announcements.</p>
+          </details>
+        </div>
+        <figure class="work-figure">
+          <a class="figure-link" href="assets/volatility.webp" aria-label="View the intraday forecast chart at full size">
+            <img src="assets/volatility.webp" width="1500" height="864" alt="Bar chart showing the biggest forecast-error reductions at market open and close. The overall MSE-weighted reduction is 19.2% and the equal-weighted mean is 16.1%." loading="lazy" decoding="async">
+            <span class="figure-action" aria-hidden="true">Enlarge figure</span>
+          </a>
+          <figcaption>Forecast-error reductions from adding 0DTE implied volatility, by time of day. FOMC days are excluded.</figcaption>
+        </figure>
+      </article>
+
+      <section class="research-explorer" aria-labelledby="research-explorer-title" hidden>
+        <div class="research-explorer__heading">
+          <h3 id="research-explorer-title">Forecasting gains by time of day</h3>
+          <fieldset class="research-explorer__benchmarks">
+            <legend>Comparison line</legend>
+            <div class="research-explorer__choices">
+              <label><input type="radio" name="forecast-benchmark" value="19.2" checked><span><strong>19.2%</strong> MSE-weighted</span></label>
+              <label><input type="radio" name="forecast-benchmark" value="16.1"><span><strong>16.1%</strong> Equal-weighted</span></label>
+            </div>
+          </fieldset>
+        </div>
+        <div class="research-explorer__body">
+          <div class="research-explorer__chart">
+            <p class="research-explorer__axis-title">Reduction in forecast MSE</p>
+            <div class="research-explorer__plot" role="group" aria-label="Forecast error reduction by trading interval" aria-describedby="research-explorer-help">
+              <div class="research-explorer__scale" aria-hidden="true">
+                <span>40%</span><span>30%</span><span>20%</span><span>10%</span><span>0%</span>
+              </div>
+              <div class="research-explorer__bars"></div>
+              <span class="research-explorer__rule" aria-hidden="true"></span>
+            </div>
+            <p class="research-explorer__axis-x">Interval start time</p>
+          </div>
+          <div class="research-explorer__reading">
+            <p class="research-explorer__reading-label">
+              Interval starting <time class="research-explorer__time" datetime="09:31">09:31</time>
+            </p>
+            <p class="research-explorer__value">34<span>%</span></p>
+            <p>reduction in forecast MSE</p>
+            <p class="research-explorer__lag">Uses pre-open implied volatility.</p>
+            <span class="research-explorer__sr" role="status" aria-atomic="true"></span>
+          </div>
+        </div>
+        <p class="research-explorer__foot" id="research-explorer-help">
+          Select a bar or use the arrow keys to explore. FOMC days are excluded. Bar values are rounded as labeled in the paper’s figure.
+        </p>
+      </section>
+
+      <article class="work-row">
+        <div class="work-copy">
+          <p class="work-meta">Retail options · Household credit</p>
+          <h3>Real Effect of Speculation: Option Market to Credit Market</h3>
+          <p class="coauthors">With <a href="https://sites.google.com/view/pulakghosh">Pulak Ghosh</a> (IIM Bangalore), <a href="https://preetesh-kantak.com/">Preetesh Kantak</a> (Indiana University Kelley School of Business), and <a href="https://www.sharmav.com/">Varun Sharma</a> (Indiana University Kelley School of Business).</p>
+          <details class="abstract">
+            <summary aria-label="Read abstract for Real Effect of Speculation">Read abstract</summary>
+            <p>Is the global surge in retail options trading debt-driven? Combining India’s countrywide administrative credit registry with near-universe trades from one of the world’s largest options exchanges, we show that option trading and consumer borrowing move together: areas with higher participation in a quarter see more credit applications and larger loan balances. For identification, we exploit a regulatory change that raised the minimum tradable quantity of options. The higher participation cost drove some households out, but those who remained doubled their outlay to meet the new threshold. Areas more exposed to the change saw faster consumer credit growth. The additional borrowing came through credit cards, overdrafts, gold loans, and consumer loans from FinTech and non-bank lenders. Mortgages and vehicle loans did not respond, as they would if improving local economic conditions were driving credit growth. Individual accounts at a large bank and its broker tell the same story: customers borrow more in the quarters in which they trade more, and the premium they pay for options rises after they take out a personal, consumer, or gold loan. Our results suggest that household options participation is partly debt-financed, and that regulations raising participation costs can unintentionally increase borrowing.</p>
+          </details>
+        </div>
+        <figure class="work-figure">
+          <a class="figure-link" href="assets/credit.webp" aria-label="View the credit response chart at full size">
+            <img src="assets/credit.webp" width="1402" height="603" alt="Two event-study panels show the number of loan accounts and approved loan amounts rising after the July 2015 rule change in more exposed areas." loading="lazy" decoding="async">
+            <span class="figure-action" aria-hidden="true">Enlarge figure</span>
+          </a>
+          <figcaption>Estimated credit response to the 2015 increase in minimum option-trade size. Bars show 95% confidence intervals.</figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <section id="other-writings" class="section writing shell" aria-labelledby="writing-title">
+      <div class="section-heading">
+        <h2 id="writing-title">Other writing</h2>
+      </div>
+      <div class="writing-grid">
+        <article class="writing-card">
+          <div class="writing-copy">
+            <h3>Shrinkage Is All You Need: Evidence from BVARs with SPF Priors</h3>
+            <p>This application tests whether priors drawn from the Survey of Professional Forecasters improve Bayesian VAR forecasts. The best-performing model tunes the shrinkage parameter and assigns zero weight to the survey forecasts.</p>
+          </div>
+          <figure class="work-figure">
+            <a class="figure-link" href="assets/shrinkage.webp" aria-label="View the Bayesian VAR forecast chart at full size">
+              <img src="assets/shrinkage.webp" width="1500" height="1093" alt="Tuned shrinkage has the lowest one-quarter-ahead forecast error across all six variables shown." loading="lazy" decoding="async">
+              <span class="figure-action" aria-hidden="true">Enlarge figure</span>
+            </a>
+            <figcaption>One-quarter-ahead forecast errors for six U.S. variables, relative to an unregularized VAR benchmark of 100.</figcaption>
+          </figure>
+        </article>
+        <article class="writing-card">
+          <div class="writing-copy">
+            <h3>CP and Tucker Tensor Decomposition of Bilateral Trade Data</h3>
+            <p>Using bilateral trade data for 27 major economies from 2010 to 2024, this project compares CP and Tucker tensor decompositions. Four exporter–importer patterns and a common time trend provide a compact representation of the trade data.</p>
+          </div>
+          <figure class="work-figure">
+            <a class="figure-link" href="assets/trade.webp" aria-label="View the bilateral trade reconstruction chart at full size">
+              <img src="assets/trade.webp" width="1500" height="974" alt="Reconstruction fit rises as the model adds trade patterns. The highlighted model reaches 70.9% fit using four patterns and 280 parameters." loading="lazy" decoding="async">
+              <span class="figure-action" aria-hidden="true">Enlarge figure</span>
+            </a>
+            <figcaption>The four-pattern representation uses 280 parameters for 10,935 observations.</figcaption>
+          </figure>
+        </article>
+      </div>
+    </section>
+
+    <section id="news" class="section shell" aria-labelledby="news-title">
+      <div class="section-heading">
+        <h2 id="news-title">Recent talks</h2>
+      </div>
+      <ul class="news-list">
+        <li>
+          <time datetime="2026-08">Aug 2026</time>
+          <div><a href="https://vieco2026.univie.ac.at/">Vienna–Copenhagen Conference on Financial Econometrics</a><p>University of Vienna · Presented “Too Short to Ignore”</p></div>
+        </li>
+        <li>
+          <time datetime="2026-06">Jun 2026</time>
+          <div><a href="https://fba.um.edu.mo/sofie2026/">18th Annual SoFiE Conference</a><p>University of Macau · Presented “Too Short to Ignore”</p></div>
+        </li>
+        <li>
+          <time datetime="2026-06">Jun 2026</time>
+          <div><a href="https://qffe2026.sciencesconf.org/">Quantitative Finance and Financial Econometrics Conference</a><p>Marseille, France · Presented “Too Short to Ignore”</p></div>
+        </li>
+        <li>
+          <time datetime="2025-04">Apr 2025</time>
+          <div><a href="https://eesp.fgv.br/evento/sao-paulo-school-advanced-science-high-dimensional-modeling">São Paulo School of Advanced Science on High-Dimensional Modelling</a><p>FGV EESP · Poster on “Effects of expectation: Networks of Financial Volatility”</p></div>
+        </li>
+      </ul>
+    </section>
+
+    <section id="teaching" class="section shell" aria-labelledby="teaching-title">
+      <div class="section-heading">
+        <h2 id="teaching-title">Teaching</h2>
+      </div>
+      <div class="teaching-list">
+        <article class="teaching-row">
+          <p class="work-meta">Sep–Dec 2026</p>
+          <div>
+            <h3>Econometrics 101</h3>
+            <p>Ph.D. course · ESSEC Business School</p>
+            <p>Teaching assistant for Roberto Renò</p>
+          </div>
+        </article>
+        <article class="teaching-row">
+          <p class="work-meta">Jan–May 2022</p>
+          <div>
+            <h3>Probability I</h3>
+            <p>Undergraduate course · IISER Kolkata</p>
+            <p>Teaching assistant for Soumya Bhattacharya</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="contact" aria-labelledby="contact-title">
+      <div class="contact-inner shell">
+        <div>
+          <h2 id="contact-title">Get in <em>touch<span aria-hidden="true">.</span></em></h2>
+          <p>I welcome inquiries about postdoctoral opportunities and research collaborations.</p>
+        </div>
+        <dl class="contact-links">
+          <div><dt>ESSEC</dt><dd><a href="mailto:vaishnav.garg@essec.edu">vaishnav.garg@essec.edu</a></dd></div>
+          <div><dt>Princeton</dt><dd><a href="mailto:vg3947@princeton.edu">vg3947@princeton.edu</a></dd></div>
+          <div><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/vaishnav-garg/">View profile</a></dd></div>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner shell">
+      <small>© 2026 Vaishnav Garg</small>
+      <div class="footer-actions">
+        <button type="button" data-replay-intro hidden>Replay intro</button>
+        <a href="#home">Back to top</a>
+      </div>
+    </div>
+  </footer>
+
+  <dialog class="figure-dialog" aria-labelledby="figure-title" aria-describedby="figure-caption">
+    <div class="figure-dialog-header">
+      <h2 id="figure-title">Research figure</h2>
+      <form method="dialog"><button type="submit">Close</button></form>
+    </div>
+    <img alt="">
+    <p id="figure-caption" class="figure-dialog-caption"></p>
+  </dialog>
+</body>
+</html>

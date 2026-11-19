@@ -1,0 +1,76 @@
+.launch-screen[hidden] {
+  display: none;
+}
+
+html.has-launch .launch-screen[hidden] {
+  position: fixed;
+  z-index: 50;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  pointer-events: none;
+  color: #f3f1e7;
+  background: radial-gradient(ellipse at 50% 63%, #202b27, #101116 59%);
+  clip-path: inset(0 0 0 0);
+  transition: clip-path .52s cubic-bezier(.72, 0, .2, 1), opacity .48s ease .04s;
+  animation: launch-safety 0s linear 1850ms forwards;
+}
+
+.launch-lockup {
+  display: grid;
+  justify-items: center;
+  gap: clamp(.25rem, 1vh, .8rem);
+  padding: 0 1rem .65rem 0;
+  animation: launch-lockup-in .55s cubic-bezier(.2, .72, .25, 1) both;
+}
+
+.launch-monogram {
+  font: italic 400 clamp(5.5rem, 13vw, 10rem)/.9 "Instrument Serif", Georgia, serif;
+  letter-spacing: -.085em;
+}
+
+.launch-monogram span {
+  color: #d6f983;
+}
+
+.launch-signal {
+  width: clamp(6rem, 17vw, 10rem);
+  height: 1px;
+  margin-left: 1rem;
+  background: #d6f98329;
+}
+
+.launch-signal::after {
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, #63764b, #ecffba);
+  box-shadow: 0 0 .55rem #d6f9839e;
+  transform-origin: left;
+  animation: launch-signal-in .55s .08s cubic-bezier(.35, .02, .25, 1) both;
+  content: "";
+}
+
+html.launch-leaving .launch-screen[hidden] {
+  clip-path: inset(0 0 100% 0);
+  opacity: 0;
+}
+
+@keyframes launch-lockup-in {
+  from { transform: translateY(.6rem) scale(.97); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@keyframes launch-signal-in {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes launch-safety {
+  to { visibility: hidden; }
+}
+
+@media (prefers-reduced-motion: reduce), print {
+  html.has-launch .launch-screen[hidden] { display: none; }
+}
